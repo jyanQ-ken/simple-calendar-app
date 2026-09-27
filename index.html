@@ -8,7 +8,7 @@
 <link rel="icon" href="icon-180.png">
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#2b5fb0">
-<link rel="stylesheet" href="style.css?v=3">
+<link rel="stylesheet" href="style.css?v=6">
 </head>
 <body>
 
@@ -19,6 +19,17 @@
     <h1 id="monthLabel"></h1>
     <button id="nextMonth" class="nav-btn" aria-label="次の月">›</button>
   </header>
+
+  <div id="modeRow" class="mode-row">
+    <button type="button" class="mode-btn off-btn active" data-mode="off">OFF</button>
+    <button type="button" class="mode-btn" data-mode="circle">〇</button>
+    <button type="button" class="mode-btn" data-mode="cross">×</button>
+    <button type="button" class="mode-btn" data-mode="heart">♥</button>
+    <button type="button" class="mode-btn" data-mode="star">★</button>
+    <button type="button" class="mode-btn" data-mode="smile">😊</button>
+    <button type="button" class="mode-btn" data-mode="hospital">🏥</button>
+  </div>
+  <p id="modeHint" class="mode-hint hidden"></p>
 
   <div class="weekdays">
     <div class="wd-sun">日</div><div>月</div><div>火</div><div>水</div><div>木</div><div>金</div><div class="wd-sat">土</div>
@@ -46,6 +57,8 @@
     <button type="button" class="mark-btn" data-mark="cross">×</button>
     <button type="button" class="mark-btn" data-mark="heart">♥</button>
     <button type="button" class="mark-btn" data-mark="star">★</button>
+    <button type="button" class="mark-btn" data-mark="smile">😊</button>
+    <button type="button" class="mark-btn" data-mark="hospital">🏥</button>
   </div>
 
   <textarea id="memoText" rows="6" placeholder="予定やメモを書けます"></textarea>
@@ -65,11 +78,13 @@
   <p class="hint">見たい項目だけチェックしてください。</p>
 
   <div id="exportChecks" class="export-checks">
-    <label><input type="checkbox" data-export="memo" checked> 予定・メモ</label>
-    <label><input type="checkbox" data-export="circle" checked> 〇</label>
-    <label><input type="checkbox" data-export="cross" checked> ×</label>
-    <label><input type="checkbox" data-export="heart" checked> ♥</label>
-    <label><input type="checkbox" data-export="star" checked> ★</label>
+    <label><input type="checkbox" data-export="memo"> 予定・メモ</label>
+    <label><input type="checkbox" data-export="circle"> 〇</label>
+    <label><input type="checkbox" data-export="cross"> ×</label>
+    <label><input type="checkbox" data-export="heart"> ♥</label>
+    <label><input type="checkbox" data-export="star"> ★</label>
+    <label><input type="checkbox" data-export="smile"> 😊</label>
+    <label><input type="checkbox" data-export="hospital"> 🏥</label>
   </div>
 
   <p class="hint">下の文章をそのままコピーして、メモやLINEなど他のアプリに貼り付けられます。</p>
@@ -79,6 +94,6 @@
   <button id="copyExportBtn" class="big-btn">コピーする</button>
 </div>
 
-<script src="script.js?v=3"></script>
+<script src="script.js?v=7"></script>
 </body>
 </html>

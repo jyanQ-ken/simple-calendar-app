@@ -4,7 +4,10 @@ const MARK_DEFS = [
   { key: "cross", symbol: "×" },
   { key: "heart", symbol: "♥" },
   { key: "star", symbol: "★" },
+  { key: "smile", symbol: "😊" },
+  { key: "hospital", symbol: "🏥" },
 ];
+const MARK_LABELS = { circle: "〇", cross: "×", heart: "♥", star: "★", smile: "😊", hospital: "🏥" };
 
 /* ---------- 日本の祝日を計算する ---------- */
 /* 通信を行わず、この端末の中だけで祝日を判定します */
@@ -136,11 +139,13 @@ function renderCalendar() {
     const holidayName = holidayNameFor(key);
     const dayData = getDayData(data, key);
 
+    const hasMemo = !!(dayData.memo && dayData.memo.trim() !== "");
+
     const cell = document.createElement("div");
     cell.className = "day-cell"
       + (dow === 0 ? " sunday" : "")
       + (dow === 6 ? " saturday" : "")
-      + (holidayName ? " holiday" : "")
+      + (holidayName ? " holiday" : (hasMemo ? " has-memo" : ""))
       + (key === todayKey ? " today" : "");
 
     const numberEl = document.createElement("div");
@@ -159,7 +164,12 @@ function renderCalendar() {
     if (activeMarks.length > 0) {
       const markLine = document.createElement("div");
       markLine.className = "mark-line";
-      markLine.textContent = activeMarks.map(def => def.symbol).join("");
+      activeMarks.forEach(def => {
+        const span = document.createElement("span");
+        span.className = `mark-symbol mark-symbol-${def.key}`;
+        span.textContent = def.symbol;
+        markLine.appendChild(span);
+      });
       cell.appendChild(markLine);
     }
 
@@ -169,10 +179,58 @@ function renderCalendar() {
       cell.appendChild(dot);
     }
 
-    cell.addEventListener("click", () => openPanel(key));
+    if (activeMode) {
+      cell.classList.add("mode-active-cell");
+    }
+
+    cell.addEventListener("click", () => {
+      if (activeMode) {
+        toggleMarkOnDay(key, activeMode);
+      } else {
+        openPanel(key);
+      }
+    });
     calendarGrid.appendChild(cell);
   }
 }
+
+/* ---------- 印を選んで連続でつけるモード ---------- */
+let activeMode = null; // null(OFF) または MARK_DEFS の key
+const modeBtns = document.querySelectorAll(".mode-btn");
+const modeHint = document.getElementById("modeHint");
+
+function toggleMarkOnDay(key, markKey) {
+  const data = loadData();
+  const dayData = getDayData(data, key);
+  dayData.marks[markKey] = !dayData.marks[markKey];
+  data[key] = dayData;
+  saveData(data);
+  renderCalendar();
+}
+
+function setActiveMode(mode) {
+  activeMode = mode === "off" ? null : mode;
+  modeBtns.forEach(btn => {
+    const isActive = activeMode === null ? btn.dataset.mode === "off" : btn.dataset.mode === activeMode;
+    btn.classList.toggle("active", isActive);
+  });
+  if (activeMode) {
+    modeHint.textContent = `選択中: ${MARK_LABELS[activeMode]} ／ カレンダーの日付をタップすると、その印がすぐつきます(もう一度タップすると消えます)`;
+    modeHint.classList.remove("hidden");
+  } else {
+    modeHint.textContent = "";
+    modeHint.classList.add("hidden");
+  }
+  renderCalendar();
+}
+
+modeBtns.forEach(btn => {
+  btn.addEventListener("click", () => {
+    const clicked = btn.dataset.mode;
+    const alreadyActive = clicked !== "off" && activeMode === clicked;
+    setActiveMode(alreadyActive ? "off" : clicked);
+  });
+});
 
 prevMonthBtn.addEventListener("click", () => {
   currentMonth--;
@@ -278,25 +336,31 @@ function buildExportText() {
     return cb ? cb.checked : true;
   };
 
-  const lines = [];
+  const includeMemo = checked("memo");
+  const includeMarks = MARK_DEFS.filter(def => checked(def.key));
 
-  if (checked("memo")) {
-    const memoLines = keys
-      .filter(key => data[key].memo && data[key].memo.trim() !== "")
-      .map(key => `${key}: ${data[key].memo.trim()}`);
-    lines.push("【予定・メモがある日】");
-    lines.push(...(memoLines.length ? memoLines : ["(なし)"]));
+  if (!includeMemo && includeMarks.length === 0) {
+    return "(表示する項目が選ばれていません)";
   }
 
-  MARK_DEFS.forEach(def => {
-    if (!checked(def.key)) return;
-    const markKeys = keys.filter(key => data[key].marks && data[key].marks[def.key]);
-    if (lines.length > 0) lines.push("");
-    lines.push(`【${def.symbol} の日】`);
-    lines.push(...(markKeys.length ? markKeys : ["(なし)"]));
+  const lines = [];
+  keys.forEach(key => {
+    const dayData = data[key];
+    const memo = includeMemo && dayData.memo && dayData.memo.trim() !== "" ? dayData.memo.trim() : "";
+    const marks = includeMarks
+      .filter(def => dayData.marks && dayData.marks[def.key])
+      .map(def => def.symbol)
+      .join(" ");
+
+    if (!memo && !marks) return;
+
+    let line = key;
+    if (marks) line += ` ${marks}`;
+    if (memo) line += `: ${memo}`;
+    lines.push(line);
   });
 
-  return lines.length ? lines.join("\n") : "(表示する項目が選ばれていません)";
+  return lines.length ? lines.join("\n") : "(該当する日がありません)";
 }
 
 function refreshExportText() {

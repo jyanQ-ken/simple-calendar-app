@@ -67,6 +67,51 @@ body {
 }
 .nav-btn:active { background: var(--accent-dark); }
 
+.mode-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+  margin-bottom: 6px;
+}
+@media (min-width: 400px) {
+  .mode-row { grid-template-columns: repeat(7, 1fr); }
+}
+
+.mode-btn {
+  font-size: 20px;
+  padding: 10px 0;
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  background: #fff;
+  color: var(--text);
+  cursor: pointer;
+}
+.mode-btn.off-btn { font-size: 14px; font-weight: 700; color: #666; }
+.mode-btn.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+.mode-btn.off-btn.active {
+  background: #666;
+  border-color: #666;
+  color: #fff;
+}
+
+.mode-hint {
+  font-size: 14px;
+  color: var(--accent-dark);
+  background: #eaf1fc;
+  border-radius: 10px;
+  padding: 8px 10px;
+  margin: 0 0 8px;
+}
+.mode-hint.hidden { display: none; }
+
+.day-cell.mode-active-cell {
+  border-color: var(--accent);
+}
+
 .weekdays {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
@@ -108,6 +153,7 @@ body {
 .day-cell.saturday .day-number { color: var(--saturday); }
 .day-cell.holiday { background: var(--holiday-bg); }
 .day-cell.holiday .day-number { color: var(--sunday); }
+.day-cell.has-memo { background: #fff8dc; }
 
 .day-cell.today {
   box-shadow: 0 0 0 3px var(--today-ring) inset;
@@ -134,6 +180,10 @@ body {
   letter-spacing: 2px;
   line-height: 1.1;
 }
+.mark-symbol-circle { color: var(--circle-color); font-weight: 700; }
+.mark-symbol-cross { color: var(--cross-color); font-weight: 700; }
+.mark-symbol-heart { color: var(--heart-color); }
+.mark-symbol-star { color: var(--star-color); }
 
 .memo-dot {
   width: 6px;
@@ -236,7 +286,7 @@ body {
 
 .mark-row-big {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 8px;
   margin-bottom: 14px;
 }
