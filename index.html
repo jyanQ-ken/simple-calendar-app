@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>やさしいカレンダー</title>
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="icon" href="icon-180.png">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#2b5fb0">
+<link rel="stylesheet" href="style.css?v=3">
+</head>
+<body>
+
+<div class="app">
+  <p class="app-title">やさしいカレンダー</p>
+  <header class="header">
+    <button id="prevMonth" class="nav-btn" aria-label="前の月">‹</button>
+    <h1 id="monthLabel"></h1>
+    <button id="nextMonth" class="nav-btn" aria-label="次の月">›</button>
+  </header>
+
+  <div class="weekdays">
+    <div class="wd-sun">日</div><div>月</div><div>火</div><div>水</div><div>木</div><div>金</div><div class="wd-sat">土</div>
+  </div>
+
+  <div id="calendarGrid" class="calendar-grid"></div>
+
+  <div class="bottom-bar">
+    <button id="openExportBtn" class="big-btn">📋 一覧を見る・コピーする</button>
+  </div>
+</div>
+
+<!-- 日付詳細パネル -->
+<div id="overlay" class="overlay hidden"></div>
+<div id="panel" class="panel hidden">
+  <div class="panel-header">
+    <h2 id="panelDate"></h2>
+    <button id="closePanel" class="close-btn" aria-label="閉じる">×</button>
+  </div>
+
+  <p id="panelHoliday" class="panel-holiday-label hidden"></p>
+
+  <div class="mark-row-big">
+    <button type="button" class="mark-btn" data-mark="circle">〇</button>
+    <button type="button" class="mark-btn" data-mark="cross">×</button>
+    <button type="button" class="mark-btn" data-mark="heart">♥</button>
+    <button type="button" class="mark-btn" data-mark="star">★</button>
+  </div>
+
+  <textarea id="memoText" rows="6" placeholder="予定やメモを書けます"></textarea>
+
+  <button id="saveMemoBtn" class="big-btn">保存する</button>
+  <button id="deleteDayBtn" class="text-btn danger">この日の内容をぜんぶ消す</button>
+</div>
+
+<!-- 一覧・書き出しパネル -->
+<div id="exportOverlay" class="overlay hidden"></div>
+<div id="exportPanel" class="panel hidden">
+  <div class="panel-header">
+    <h2>一覧・書き出し</h2>
+    <button id="closeExportPanel" class="close-btn" aria-label="閉じる">×</button>
+  </div>
+
+  <p class="hint">見たい項目だけチェックしてください。</p>
+
+  <div id="exportChecks" class="export-checks">
+    <label><input type="checkbox" data-export="memo" checked> 予定・メモ</label>
+    <label><input type="checkbox" data-export="circle" checked> 〇</label>
+    <label><input type="checkbox" data-export="cross" checked> ×</label>
+    <label><input type="checkbox" data-export="heart" checked> ♥</label>
+    <label><input type="checkbox" data-export="star" checked> ★</label>
+  </div>
+
+  <p class="hint">下の文章をそのままコピーして、メモやLINEなど他のアプリに貼り付けられます。</p>
+
+  <textarea id="exportText" rows="14" readonly></textarea>
+
+  <button id="copyExportBtn" class="big-btn">コピーする</button>
+</div>
+
+<script src="script.js?v=3"></script>
+</body>
+</html>
