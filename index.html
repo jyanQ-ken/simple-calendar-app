@@ -8,7 +8,7 @@
 <link rel="icon" href="icon-180.png">
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#2b5fb0">
-<link rel="stylesheet" href="style.css?v=6">
+<link rel="stylesheet" href="style.css?v=7">
 </head>
 <body>
 
@@ -27,7 +27,9 @@
     <button type="button" class="mode-btn" data-mode="heart">♥</button>
     <button type="button" class="mode-btn" data-mode="star">★</button>
     <button type="button" class="mode-btn" data-mode="smile">😊</button>
-    <button type="button" class="mode-btn" data-mode="hospital">🏥</button>
+    <button type="button" class="mode-btn" data-mode="hospital"><span class="mode-icon">🏥</span><span class="mode-label">病院</span></button>
+    <button type="button" class="mode-btn" data-mode="medicine"><span class="mode-icon">💊</span><span class="mode-label">薬局</span></button>
+    <button type="button" class="mode-btn" data-mode="shopping"><span class="mode-icon">🛍️</span><span class="mode-label">買い物</span></button>
   </div>
   <p id="modeHint" class="mode-hint hidden"></p>
 
@@ -58,7 +60,9 @@
     <button type="button" class="mark-btn" data-mark="heart">♥</button>
     <button type="button" class="mark-btn" data-mark="star">★</button>
     <button type="button" class="mark-btn" data-mark="smile">😊</button>
-    <button type="button" class="mark-btn" data-mark="hospital">🏥</button>
+    <button type="button" class="mark-btn" data-mark="hospital"><span class="mode-icon">🏥</span><span class="mode-label">病院</span></button>
+    <button type="button" class="mark-btn" data-mark="medicine"><span class="mode-icon">💊</span><span class="mode-label">薬局</span></button>
+    <button type="button" class="mark-btn" data-mark="shopping"><span class="mode-icon">🛍️</span><span class="mode-label">買い物</span></button>
   </div>
 
   <textarea id="memoText" rows="6" placeholder="予定やメモを書けます"></textarea>
@@ -84,7 +88,9 @@
     <label><input type="checkbox" data-export="heart"> ♥</label>
     <label><input type="checkbox" data-export="star"> ★</label>
     <label><input type="checkbox" data-export="smile"> 😊</label>
-    <label><input type="checkbox" data-export="hospital"> 🏥</label>
+    <label><input type="checkbox" data-export="hospital"> 🏥 病院</label>
+    <label><input type="checkbox" data-export="medicine"> 💊 薬局</label>
+    <label><input type="checkbox" data-export="shopping"> 🛍️ 買い物</label>
   </div>
 
   <p class="hint">下の文章をそのままコピーして、メモやLINEなど他のアプリに貼り付けられます。</p>
@@ -94,6 +100,6 @@
   <button id="copyExportBtn" class="big-btn">コピーする</button>
 </div>
 
-<script src="script.js?v=7"></script>
+<script src="script.js?v=8"></script>
 </body>
 </html>

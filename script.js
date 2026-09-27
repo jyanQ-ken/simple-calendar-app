@@ -6,8 +6,13 @@ const MARK_DEFS = [
   { key: "star", symbol: "★" },
   { key: "smile", symbol: "😊" },
   { key: "hospital", symbol: "🏥" },
+  { key: "medicine", symbol: "💊" },
+  { key: "shopping", symbol: "🛍️" },
 ];
-const MARK_LABELS = { circle: "〇", cross: "×", heart: "♥", star: "★", smile: "😊", hospital: "🏥" };
+const MARK_LABELS = {
+  circle: "〇", cross: "×", heart: "♥", star: "★", smile: "😊",
+  hospital: "病院", medicine: "薬局", shopping: "買い物",
+};
 
 /* ---------- 日本の祝日を計算する ---------- */
 /* 通信を行わず、この端末の中だけで祝日を判定します */

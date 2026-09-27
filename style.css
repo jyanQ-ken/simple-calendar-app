@@ -69,12 +69,12 @@ body {
 
 .mode-row {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 6px;
   margin-bottom: 6px;
 }
 @media (min-width: 400px) {
-  .mode-row { grid-template-columns: repeat(7, 1fr); }
+  .mode-row { grid-template-columns: repeat(5, 1fr); }
 }
 
 .mode-btn {
@@ -85,7 +85,16 @@ body {
   background: #fff;
   color: var(--text);
   cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  line-height: 1.1;
 }
+.mode-btn .mode-icon { font-size: 22px; }
+.mode-btn .mode-label { font-size: 11px; font-weight: 700; color: #555; }
+.mode-btn.active .mode-label { color: #fff; }
 .mode-btn.off-btn { font-size: 14px; font-weight: 700; color: #666; }
 .mode-btn.active {
   background: var(--accent);
@@ -299,7 +308,15 @@ body {
   background: #fff;
   cursor: pointer;
   line-height: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
 }
+.mark-btn .mode-icon { font-size: 30px; }
+.mark-btn .mode-label { font-size: 12px; font-weight: 700; color: #555; }
+.mark-btn.active .mode-label { color: #fff; }
 .mark-btn[data-mark="circle"] { color: var(--circle-color); }
 .mark-btn[data-mark="cross"] { color: var(--cross-color); }
 .mark-btn[data-mark="heart"] { color: var(--heart-color); }
