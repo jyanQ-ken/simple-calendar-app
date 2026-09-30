@@ -349,6 +349,51 @@ textarea {
   margin-top: 0;
 }
 
+.bp-section {
+  margin-bottom: 14px;
+}
+.bp-title {
+  font-size: 15px;
+  margin: 0 0 6px;
+  color: #555;
+}
+.bp-row {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+}
+.bp-field {
+  display: flex;
+  flex-direction: column;
+  font-size: 13px;
+  color: #555;
+  gap: 2px;
+}
+.bp-field input {
+  width: 100%;
+  font-size: 20px;
+  text-align: center;
+  padding: 8px 4px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+.bp-slash {
+  font-size: 22px;
+  padding-bottom: 8px;
+  color: #999;
+}
+.bp-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  margin-top: 2px;
+  background: #6b3fa0;
+}
+.dot-row {
+  display: flex;
+  gap: 3px;
+}
+
 .export-checks {
   display: flex;
   flex-wrap: wrap;

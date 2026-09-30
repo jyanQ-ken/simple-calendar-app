@@ -8,7 +8,7 @@
 <link rel="icon" href="icon-180.png">
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#2b5fb0">
-<link rel="stylesheet" href="style.css?v=8">
+<link rel="stylesheet" href="style.css?v=9">
 </head>
 <body>
 
@@ -65,6 +65,25 @@
     <button type="button" class="mark-btn" data-mark="shopping"><span class="mode-icon">🛍️</span><span class="mode-label">買い物</span></button>
   </div>
 
+  <div class="bp-section">
+    <h3 class="bp-title">血圧・脈拍</h3>
+    <div class="bp-row">
+      <label class="bp-field">
+        <span>上</span>
+        <input type="number" id="bpHigh" inputmode="numeric" placeholder="128">
+      </label>
+      <span class="bp-slash">/</span>
+      <label class="bp-field">
+        <span>下</span>
+        <input type="number" id="bpLow" inputmode="numeric" placeholder="82">
+      </label>
+      <label class="bp-field">
+        <span>脈拍</span>
+        <input type="number" id="bpPulse" inputmode="numeric" placeholder="72">
+      </label>
+    </div>
+  </div>
+
   <textarea id="memoText" rows="6" placeholder="予定やメモを書けます"></textarea>
 
   <button id="saveMemoBtn" class="big-btn">保存する</button>
@@ -91,6 +110,7 @@
     <label><input type="checkbox" data-export="hospital"> 🏥 病院</label>
     <label><input type="checkbox" data-export="medicine"> 💊 薬局</label>
     <label><input type="checkbox" data-export="shopping"> 🛍️ 買い物</label>
+    <label><input type="checkbox" data-export="bp"> 血圧・脈拍</label>
   </div>
 
   <p class="hint">下の文章をそのままコピーして、メモやLINEなど他のアプリに貼り付けられます。</p>
@@ -100,7 +120,7 @@
   <button id="copyExportBtn" class="big-btn">コピーする</button>
 </div>
 
-<script src="script.js?v=8"></script>
+<script src="script.js?v=9"></script>
 <script>
   if ("serviceWorker" in navigator) {
     window.addEventListener("load", () => {

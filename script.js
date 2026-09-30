@@ -111,7 +111,12 @@ function getDayData(data, key) {
   const raw = data[key] || {};
   const marks = {};
   MARK_DEFS.forEach(def => { marks[def.key] = !!(raw.marks && raw.marks[def.key]); });
-  return { memo: raw.memo || "", marks };
+  const bp = raw.bp || {};
+  return {
+    memo: raw.memo || "",
+    marks,
+    bp: { high: bp.high || "", low: bp.low || "", pulse: bp.pulse || "" },
+  };
 }
 
 /* ---------- カレンダー表示 ---------- */
@@ -178,10 +183,21 @@ function renderCalendar() {
       cell.appendChild(markLine);
     }
 
-    if (dayData.memo && dayData.memo.trim() !== "") {
-      const dot = document.createElement("div");
-      dot.className = "memo-dot";
-      cell.appendChild(dot);
+    const hasBp = !!(dayData.bp.high || dayData.bp.low || dayData.bp.pulse);
+    if (hasMemo || hasBp) {
+      const dotRow = document.createElement("div");
+      dotRow.className = "dot-row";
+      if (hasMemo) {
+        const dot = document.createElement("div");
+        dot.className = "memo-dot";
+        dotRow.appendChild(dot);
+      }
+      if (hasBp) {
+        const dot = document.createElement("div");
+        dot.className = "bp-dot";
+        dotRow.appendChild(dot);
+      }
+      cell.appendChild(dotRow);
     }
 
     if (activeMode) {
@@ -256,6 +272,9 @@ const panelHoliday = document.getElementById("panelHoliday");
 const closePanelBtn = document.getElementById("closePanel");
 const markBtns = document.querySelectorAll(".mark-btn");
 const memoText = document.getElementById("memoText");
+const bpHigh = document.getElementById("bpHigh");
+const bpLow = document.getElementById("bpLow");
+const bpPulse = document.getElementById("bpPulse");
 const saveMemoBtn = document.getElementById("saveMemoBtn");
 const deleteDayBtn = document.getElementById("deleteDayBtn");
 
@@ -277,6 +296,9 @@ function openPanel(key) {
     btn.classList.toggle("active", dayData.marks[btn.dataset.mark]);
   });
   memoText.value = dayData.memo;
+  bpHigh.value = dayData.bp.high;
+  bpLow.value = dayData.bp.low;
+  bpPulse.value = dayData.bp.pulse;
 
   overlay.classList.remove("hidden");
   panel.classList.remove("hidden");
@@ -308,6 +330,7 @@ saveMemoBtn.addEventListener("click", () => {
   const data = loadData();
   const dayData = getDayData(data, selectedKey);
   dayData.memo = memoText.value;
+  dayData.bp = { high: bpHigh.value, low: bpLow.value, pulse: bpPulse.value };
   data[selectedKey] = dayData;
   saveData(data);
   saveMemoBtn.textContent = "保存しました";
@@ -343,8 +366,9 @@ function buildExportText() {
 
   const includeMemo = checked("memo");
   const includeMarks = MARK_DEFS.filter(def => checked(def.key));
+  const includeBp = checked("bp");
 
-  if (!includeMemo && includeMarks.length === 0) {
+  if (!includeMemo && includeMarks.length === 0 && !includeBp) {
     return "(表示する項目が選ばれていません)";
   }
 
@@ -357,10 +381,17 @@ function buildExportText() {
       .map(def => def.symbol)
       .join(" ");
 
-    if (!memo && !marks) return;
+    let bpText = "";
+    if (includeBp && dayData.bp && (dayData.bp.high || dayData.bp.low || dayData.bp.pulse)) {
+      bpText = `血圧${dayData.bp.high || "?"}/${dayData.bp.low || "?"}`;
+      if (dayData.bp.pulse) bpText += ` 脈拍${dayData.bp.pulse}`;
+    }
+
+    if (!memo && !marks && !bpText) return;
 
     let line = key;
     if (marks) line += ` ${marks}`;
+    if (bpText) line += ` ${bpText}`;
     if (memo) line += `: ${memo}`;
     lines.push(line);
   });
